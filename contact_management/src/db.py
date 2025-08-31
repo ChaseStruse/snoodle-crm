@@ -25,3 +25,4 @@ def insert_item_to_db(item, engine):
         session.refresh(item)
         return item
     
+create_tables(get_engine("sqlite:///contact_management/contacts.db"))

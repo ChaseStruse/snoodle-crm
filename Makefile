@@ -9,3 +9,6 @@ run-activity-task:
 
 run-sales:
 	fastapi dev sales_management/src/api/sales_management_api.py
+
+run-ui: 
+	PYTHONPATH=crm_interface/src python3 crm_interface/src/views/contact_view.py
