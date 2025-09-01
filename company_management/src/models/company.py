@@ -21,5 +21,5 @@ class Company(Base):
             "business_contact_phone_number": self.business_contact_phone_number,
             "address": self.address,
             "date_added": self.date_added.isoformat(),
-            "primary_contact_id": str(self.primary_contact_id) if self.primary_contact_id is not None else "",
+            "primary_contact_id": self.primary_contact_id,
         }
