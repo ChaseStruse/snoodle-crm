@@ -5,7 +5,9 @@ from models.company import Company
 from repositories.company_management_repository import (
     get_all_companies,
     get_company_by_id,
-    insert_company
+    insert_company,
+    update_company_by_id,
+    remove_company_by_id
 )
 
 def convert_json_to_company(company_json: dict):
@@ -51,4 +53,26 @@ def create_company(company: dict) -> dict:
         return response_obj.response()
     except Exception as e:
         response_obj = CompanyManagementAPIResponse(company_id="Error", success=False, message=f"Error creating company, please try again.")
+        return response_obj.response()
+    
+
+def update_company(company_id: str, contact: dict) -> dict:
+    try:
+        company_obj = convert_json_to_company(contact)
+        updated_company = update_company_by_id(company_id=uuid.UUID(company_id), company=company_obj)
+        response_obj = CompanyManagementAPIResponse(company_id=company_id, data=updated_company.get_response_data(),
+                                                    message="Company updated successfully")
+        return response_obj.response()
+    except Exception as e:
+        response_obj = CompanyManagementAPIResponse(company_id=company_id, success=False, message=f"Error updating company, please try again.")
+        return response_obj.response()
+
+
+def remove_company(company_id: str) -> dict:
+    try:
+        remove_company_by_id(company_id=uuid.UUID(company_id))
+        response_obj = CompanyManagementAPIResponse(company_id=company_id, message="Contact removed successfully")
+        return response_obj.response()
+    except Exception as e:
+        response_obj = CompanyManagementAPIResponse(company_id=company_id, success=False, message=f"Error removing company, please try again.")
         return response_obj.response()
