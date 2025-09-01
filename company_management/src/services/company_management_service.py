@@ -4,6 +4,7 @@ from models.company_management_api_response import CompanyManagementAPIResponse
 from models.company import Company
 from repositories.company_management_repository import (
     get_all_companies,
+    get_company_by_id,
     insert_company
 )
 
@@ -25,6 +26,19 @@ def retrieve_all_companies() -> dict:
         return response_obj.response()
     except Exception as e:
         response_obj = CompanyManagementAPIResponse(company_id="Error", success=False, message=f"Error retrieving companies, please try again.")
+        return response_obj.response()
+    
+
+def retrieve_company_by_id(company_id: str) -> dict:
+    try:
+        company = get_company_by_id(company_id=uuid.UUID(company_id))
+        if company:
+            response_obj = CompanyManagementAPIResponse(company_id=company_id, data=company.get_response_data(), message="Company retrieved successfully")
+        else:
+            response_obj = CompanyManagementAPIResponse(company_id=company_id, success=False, message="Company not found")
+        return response_obj.response()
+    except Exception as e:
+        response_obj = CompanyManagementAPIResponse(company_id=company_id, success=False, message=f"Error retrieving company, please try again.")
         return response_obj.response()
     
 

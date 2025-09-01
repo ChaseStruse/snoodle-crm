@@ -16,6 +16,13 @@ def get_all_companies():
         return items
     
 
+def get_company_by_id(company_id):
+    SessionLocal = sessionmaker(bind=create_engine(db_url))
+    with SessionLocal() as session:
+        company = session.query(Company).filter(Company.id == company_id).first()
+        return company
+    
+
 def insert_company(company: Company) -> Company:
     SessionLocal = sessionmaker(bind=create_engine(db_url))
     print("Inserting company:", company.get_response_data())

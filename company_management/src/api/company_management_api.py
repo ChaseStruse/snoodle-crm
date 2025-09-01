@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from services.company_management_service import (
     retrieve_all_companies,
+    retrieve_company_by_id,
     create_company,
 )
 app = FastAPI()
@@ -18,12 +19,8 @@ def get_all_companies():
 
 
 @app.get("/companies/{company_id}")
-def get_company_by_id(company_id: int):
-    return {
-        "body": {
-            "company_id": company_id
-        }
-    }
+def get_company_by_id(company_id: str):
+    return retrieve_company_by_id(company_id)
 
 @app.post("/companies/")
 def post_company(company: dict):
