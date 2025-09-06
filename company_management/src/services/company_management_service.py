@@ -11,6 +11,7 @@ from repositories.company_management_repository import (
 )
 
 def convert_json_to_company(company_json: dict):
+    print("Converting JSON to Company:", company_json)
     return Company(
         id=uuid.uuid4(),
         name=company_json.get("name"),
@@ -56,9 +57,10 @@ def create_company(company: dict) -> dict:
         return response_obj.response()
     
 
-def update_company(company_id: str, contact: dict) -> dict:
+def update_company(company_id: str, company: dict) -> dict:
     try:
-        company_obj = convert_json_to_company(contact)
+        company_obj = convert_json_to_company(company)
+        print(company_obj.get_response_data())
         updated_company = update_company_by_id(company_id=uuid.UUID(company_id), company=company_obj)
         response_obj = CompanyManagementAPIResponse(company_id=company_id, data=updated_company.get_response_data(),
                                                     message="Company updated successfully")
@@ -71,7 +73,7 @@ def update_company(company_id: str, contact: dict) -> dict:
 def remove_company(company_id: str) -> dict:
     try:
         remove_company_by_id(company_id=uuid.UUID(company_id))
-        response_obj = CompanyManagementAPIResponse(company_id=company_id, message="Contact removed successfully")
+        response_obj = CompanyManagementAPIResponse(company_id=company_id, message="Company removed successfully")
         return response_obj.response()
     except Exception as e:
         response_obj = CompanyManagementAPIResponse(company_id=company_id, success=False, message=f"Error removing company, please try again.")

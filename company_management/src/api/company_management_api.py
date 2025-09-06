@@ -35,6 +35,7 @@ def post_company(company: dict):
 @app.put("/companies/{company_id}")
 def put_company(company_id: str, company: dict):
     """Update an existing company by its ID."""
+    print("PUT /companies/{company_id} called with company_id:", company_id)
     return update_company(company_id, company)
 
 
