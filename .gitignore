@@ -12,3 +12,4 @@ instance/
 out/
 build/
 dist/
+*.log
