@@ -42,7 +42,6 @@ def update_company_by_id(company_id: uuid.UUID, company: Company) -> Company:
             db_company.business_contact_email = company.business_contact_email
             db_company.business_contact_phone_number = company.business_contact_phone_number
             db_company.address = company.address
-            db_company.date_added = company.date_added
             db_company.primary_contact_id = company.primary_contact_id
             session.commit()
             session.refresh(db_company)
